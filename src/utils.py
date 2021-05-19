@@ -1,11 +1,13 @@
 import asyncio
 from pathlib import Path
 import pandas as pd
+from os import listdir
 
-from azure.cognitiveservices.vision.face import FaceClient
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
 
-from typing import Dict
+from typing import Dict, List, Iterator
 
 def parse_creds() -> Dict[str, str]:
     creds_dict: Dict = dict()
@@ -17,15 +19,20 @@ def parse_creds() -> Dict[str, str]:
     return creds_dict
         
 
-def get_faceclient() -> FaceClient:
+def get_visionclient() -> ComputerVisionClient:
     creds: Dict[str, str] = parse_creds()
-    face_client : FaceClient = FaceClient(creds.get('endpoint'), CognitiveServicesCredentials(creds.get('key')))
-    return face_client
+    vision_client : ComputerVisionClient = ComputerVisionClient(creds.get('endpoint'), CognitiveServicesCredentials(creds.get('key')))
+    return vision_client
 
-def get_val_file() -> pd.DataFrame:
+def get_valdf() -> pd.DataFrame:
     path: Path = Path.cwd().parent.joinpath('data').joinpath('fairface_label_val.csv')
     return pd.read_csv(path)
 
+def get_images() -> List[Path]:
+    folder_path: Path = Path.cwd().parent.joinpath('data').joinpath('val')
+    return (folder_path.joinpath(x) for x in listdir(folder_path))
+
 if __name__ == '__main__':
-    #print(get_faceclient())
+    print(get_visionclient())
     #print(get_val_file().head())
+    print(len(list(get_images())))
