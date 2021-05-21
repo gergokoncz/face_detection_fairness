@@ -28,6 +28,14 @@ def get_valdf() -> pd.DataFrame:
     path: Path = Path.cwd().parent.joinpath('data').joinpath('fairface_label_val.csv')
     return pd.read_csv(path)
 
+def get_azuredf() -> pd.DataFrame:
+    path: Path = Path.cwd().parent.joinpath('data').joinpath('azure_analyzed.csv')
+    return pd.read_csv(path)
+
+def get_azured_val() -> pd.DataFrame:
+    path: Path = Path.cwd().parent.joinpath('data').joinpath('azure_val_merged.csv')
+    return pd.read_csv(path)
+
 def get_images() -> List[Path]:
     folder_path: Path = Path.cwd().parent.joinpath('data').joinpath('val')
     return (folder_path.joinpath(x) for x in listdir(folder_path))
