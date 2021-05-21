@@ -36,6 +36,10 @@ def get_azured_val() -> pd.DataFrame:
     path: Path = Path.cwd().parent.joinpath('data').joinpath('azure_val_merged.csv')
     return pd.read_csv(path)
 
+def get_aws_val_df() -> pd.DataFrame:
+    path: Path = Path.cwd().parent.joinpath('data').joinpath('aws_val_merged.csv')
+    return pd.read_csv(path)
+
 def get_images() -> List[Path]:
     folder_path: Path = Path.cwd().parent.joinpath('data').joinpath('val')
     return (folder_path.joinpath(x) for x in listdir(folder_path))
